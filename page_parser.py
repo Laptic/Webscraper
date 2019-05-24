@@ -34,29 +34,31 @@ def newEggScaper(url,filename,writeMode):
     #writes all ram values to a text file
     file = open(filename,writeMode)
 
+    #number the individual products
+    num = 1
     for item in item_blocks:
-
+        #add a way to differentiate between a new file and an old file
+        #number the individual products
+        file.write(str(num)+". ")
         file.write(item.xpath('.//a[@class="item-title"]')[0].text_content() + ",")
         file.write(item.xpath('.//li[@class="price-current"]')[0].text_content().replace('\r\n',' ').replace('\t', ' ').replace('|', ' ').split()[0] +"\r\n")
-
+        num = num + 1
 
     file.close()
     return 0
 
 def newEggPageScraper(filename,numOfPages):
 
-    urlname = "https://www.newegg.com/p/pl?Submit=ENE&N=-1&IsNodeId=1&d=ram&bop=And&Page=2&PageSize=36&order=BESTMATCH"
     num = 1
-
-
     while num <= numOfPages:
 
-        a = newEggScaper(urlname,filename,"a+")
-
         url = "https://www.newegg.com/p/pl?Submit=ENE&N=-1&IsNodeId=1&d=ram&bop=And&Page=%d&PageSize=36&order=BESTMATCH" % num
+        print(url)
+        newEggScaper(url,filename,"a+")
         print("sleeping...")
         sleep(5)
         num = num + 1
+
 
     return 0
 
@@ -70,5 +72,5 @@ if __name__ == "__main__":
     #item_names = new_releases.xpath('.//a[@class="item-title"]')
     #price_items = html_block.xpath('.//li[@class="price-current"]'/text())
     #stuff = newEggScaper(newEggurl,"ram.txt","w+")
-    a = newEggPageScraper("bam.txt",2)
+    a = newEggPageScraper("zam.txt",2)
     #price.text_content().replace('\r\n',' ').replace('\t', ' ').replace('|', ' ').split()[0]
