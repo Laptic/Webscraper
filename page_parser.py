@@ -46,34 +46,17 @@ def newEggScaper(url,filename,writeMode):
         position = position + 1
 
     file.close()
-    return 0
-
-#DEFUNCT,im gonna push this and than delete
-def newEggPageScraper(filename,numOfPages):
-
-    num = 1
-    while num <= numOfPages:
-
-
-        url = "https://www.newegg.com/p/pl?Submit=ENE&N=-1&IsNodeId=1&d=ram&bop=And&Page=%d&PageSize=36&order=BESTMATCH" % num
-        print(url)
-        newEggScaper(url,filename,"a+")
-        print("sleeping...")
-        sleep(5)
-        num = num + 1
-
-
-    return 0
 
 #scrapes for product information from microcenter
 #takes a url(from microcenter), a filename to write to and a writemode for the file
 #some names may have commas, so we gotta take that into account
+#some names (ram for example) have extra words attached to the name, we we gotta take those out
 def microCenterScaper(url,filename,writeMode):
 
 #dont worry about for now, in progress
 #------------------------------------------------------------------------------------
-    #user_agent = "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1)"
-    #headers = {'User-Agent': user_agent}
+    user_agent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36"
+    headers = {'User-Agent': user_agent}
 
     #proxies = {
     #"http": 'http://1.20.100.8:9050',
@@ -83,25 +66,23 @@ def microCenterScaper(url,filename,writeMode):
     #html = requests.get(url,timeout = 5,headers=headers,proxies=proxies)
 
     #------------------------------------------------------------------------------------
-    html = requests.get(url,timeout = 5)
+    html = requests.get(url,timeout = 5,headers=headers)
     doc = lxml.html.fromstring(html.content)
     #I use name and brand blocks because the name does not include the brand of the product
-    name_blocks = doc.xpath('.//li[@class="product_wrapper"]/div[@class="result_left"]/a[@data-category="Desktop Memory/RAM"]/@data-name')
-    brand_blocks = doc.xpath('.//li[@class="product_wrapper"]/div[@class="result_left"]/a[@data-category="Desktop Memory/RAM"]/@data-brand')
-    #other_item_blocks = "items = doc.xpath('.//li[@class="product_wrapper"]/div[@class="result_right"]/div[@class="details"]/div[@class="detail_wrapper"]/div[@class="pDescription compressedNormal2"]/div[@class="normal"]/h2/a/@data-name')"
+    product_blocks = doc.xpath('.//li[@class="product_wrapper"]')
     file = open(filename,writeMode)
-
     position = 1
-    for pos in range(len(name_blocks)):
+    for item in product_blocks:
 
-        file.write(str(position)+". ")
-        file.write(brand_blocks[pos] + " " + name_blocks[pos] + "\r\n")
-
+        attribs = item.xpath('.//a[@data-name]')[0].attrib
+        #add condition for if price is empty
+        print(f'{position}. {attribs["data-brand"]} {attribs["data-name"]}, ${attribs["data-price"]}',file=file)
+        print(file=file)
+        #file.write(brand_blocks[pos] + " " + name_blocks[pos])
+        #file.write(doc.xpath('.//li[@class="product_wrapper"]/div[@class="result_right"]/div[@class="details"]/div[@class="price_wrapper"]/div[@class="price"]/span[@class="price"]').text_content()  + "\r\n")
         position = position + 1
-    return 0
 
-
-
+    file.close()
 
 
 if __name__ == "__main__":
@@ -112,11 +93,12 @@ if __name__ == "__main__":
     #block.xpath('.//a[@class="item-title"]')[0].text_content()
     #item_names = new_releases.xpath('.//a[@class="item-title"]')
     #price_items = html_block.xpath('.//li[@class="price-current"]'/text())
-    newEggRamurl = "https://www.newegg.com/Desktop-Memory/SubCategory/ID-147/Page-1?Tid=7611"
-    newEggGraphicsurl = "https://www.newegg.com/Desktop-Graphics-Cards/SubCategory/ID-48/Page-1?Tid=7709"
+    newEggRamUrl = "https://www.newegg.com/Desktop-Memory/SubCategory/ID-147/Page-1?Tid=7611"
+    newEggGraphicsUrl = "https://www.newegg.com/Desktop-Graphics-Cards/SubCategory/ID-48/Page-1?Tid=7709"
     #stuff = newEggScaper(newEggGraphicsurl,"graphicsCards.txt","a+")
-    microCenterurl = "https://www.microcenter.com/category/4294966965/desktop-memory?Page=1"
-    microCenterScaper(microCenterurl,"microRam.txt","w+")
+    microCenterRamUrl = "https://www.microcenter.com/search/search_results.aspx?Ntk=all&sortby=match&N=4294966965&myStore=false"
+    microCenterGraphicsUrl = "https://www.microcenter.com/search/search_results.aspx?Ntk=all&sortby=match&N=4294966937&myStore=false"
+    microCenterScaper(microCenterGraphicsUrl,"microRam.txt","w+")
 
     #a = newEggPageScraper("zam.txt",2)
     #price.text_content().replace('\r\n',' ').replace('\t', ' ').replace('|', ' ').split()[0]
