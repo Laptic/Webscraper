@@ -60,7 +60,7 @@ def amazonScraper(url,filename,writeMode):
 #takes a url and a filename (both strings)
 #some names may have commas, so we have to replace them
 
-def newEggScaper(url,filename,writeMode):
+def newEggScaper_file(url,filename,writeMode):
 
     html = requests.get(url,timeout = 5)
     doc = lxml.html.fromstring(html.content)
@@ -83,6 +83,38 @@ def newEggScaper(url,filename,writeMode):
         position = position + 1
 
     file.close()
+
+def newEggScraper_scraper_url(url):
+
+    html = session.get(url,timeout=5)
+    doc = lxml.html.fromstring(html.content)
+
+    #holds an array of html elements that contains a product
+    product_blocks = doc.xpath('.//div[@class="item-container   "]')
+
+    product_list = []
+
+    for product in product_blocks:
+
+        temp = {}
+
+        name = product.xpath('.//a[@class="item-title"]')[0].text_content()
+        price = product.xpath('.//li[@class="price-current"]')[0].text_content().replace('\r\n',' ').replace('\t', ' ').replace('|', ' ').split()[0]
+
+        temp['name'] = name
+        temp['price'] = price
+
+        product_list.append(temp)
+
+    return product_list
+
+
+#def newEgg_scraper_item(lxml):
+
+
+
+
+
 
 #scrapes for product information from microcenter
 #takes a url(from microcenter), a filename to write to and a writemode for the file
@@ -160,7 +192,8 @@ if __name__ == "__main__":
     microCenterGraphicsUrl = "https://www.microcenter.com/search/search_results.aspx?Ntk=all&sortby=match&N=4294966937&myStore=false"
     #microCenterScaper_file(microCenterRamUrl,"microRam.txt","w+")
     url = "https://www.microcenter.com/search/search_results.aspx?Ntk=all&sortby=match&N=4294966965&myStore=true"
-    stuff = microCenter_scraper_url(url)
+    #stuff = microCenter_scraper_url(url)
+    stuff = newEggScraper_scraper_url(newEggRamUrl)
     for item in stuff:
         print(item)
         print()
