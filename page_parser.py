@@ -52,6 +52,46 @@ def amazonScraper(url,filename,writeMode):
 
     file.close()
 
+def amazon_scraper_url(url):
+
+    html = session.get(url,timeout=5)
+    doc = lxml.html.fromstring(html.content)
+
+    products = doc.xpath('//div[contains(@class,"sg-row") and contains(@class,"s-result-list")]/div[@data-asin!=""]/div/..')
+
+    product_list = []
+
+    for product in products:
+
+        temp = amazon_scraper_item(product)
+
+        product_list.append(temp)
+
+    return product_list
+
+def amazon_scraper_item(lxml):
+
+    name_xpath = './/span[contains(@class,"a-size-medium") and contains(@class,"a-color-base") and contains(@class, "a-text-normal")]'
+    price_xpath = './/span[contains(@class,"a-offscreen")]'
+
+    name = lxml.xpath(name_xpath)[0].text_content()
+    price = lxml.xpath(price_xpath)
+
+
+    if len(price) < 1:
+        price = "null"
+    else:
+        price = price[0].text_content()
+
+    item = {}
+
+    item['name'] = name
+
+    item['price'] = price
+
+    return item
+
+
 
 #scapper for newEgg using https://www.newegg.com/p/pl?d=ram&N=-1&isNodeId=1&Submit=ENE&DEPA=0&Order=BESTMATCH
 #doesnt get the first three items from the first page and does not scraper the first item from every page after
@@ -96,25 +136,28 @@ def newEggScraper_scraper_url(url):
 
     for product in product_blocks:
 
-        temp = {}
 
-        name = product.xpath('.//a[@class="item-title"]')[0].text_content()
-        price = product.xpath('.//li[@class="price-current"]')[0].text_content().replace('\r\n',' ').replace('\t', ' ').replace('|', ' ').split()[0]
-
-        temp['name'] = name
-        temp['price'] = price
+        temp = newEgg_scraper_item(product)
 
         product_list.append(temp)
 
     return product_list
 
+def newEgg_scraper_item(lxml):
 
-#def newEgg_scraper_item(lxml):
+    name_xpath = './/a[@class="item-title"]'
+    price_xpath = './/li[@class="price-current"]'
 
+    name = lxml.xpath(name_xpath)[0].text_content()
+    price = lxml.xpath(price_xpath)[0].text_content().replace('\r\n',' ').replace('\t', ' ').replace('|', ' ').split()[0]
 
+    item = {}
 
+    item['name'] = name
 
+    item['price'] = price
 
+    return item
 
 #scrapes for product information from microcenter
 #takes a url(from microcenter), a filename to write to and a writemode for the file
@@ -193,12 +236,14 @@ if __name__ == "__main__":
     #microCenterScaper_file(microCenterRamUrl,"microRam.txt","w+")
     url = "https://www.microcenter.com/search/search_results.aspx?Ntk=all&sortby=match&N=4294966965&myStore=true"
     #stuff = microCenter_scraper_url(url)
-    stuff = newEggScraper_scraper_url(newEggRamUrl)
+    #stuff = newEggScraper_scraper_url(newEggRamUrl)
+    amazonRamUrl= "https://www.amazon.com/s?k=ram&i=electronics&qid=1559337571&ref=sr_pg_1"
+    stuff = amazon_scraper_url(amazonRamUrl)
     for item in stuff:
         print(item)
         print()
 
-    amazonRamUrl= "https://www.amazon.com/s?k=ram&i=electronics&qid=1559337571&ref=sr_pg_1"
+
     #amazonScraper(amazonRamUrl,"amazonRam.txt","w")
     #a = newEggPageScraper("zam.txt",2)
     #price.text_content().replace('\r\n',' ').replace('\t', ' ').replace('|', ' ').split()[0]
