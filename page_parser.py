@@ -131,7 +131,7 @@ def newEggScraper_scraper_url(url):
 
     #holds an array of html elements that contains a product
     product_blocks = doc.xpath('.//div[@class="item-container   "]')
-
+#
     product_list = []
 
     for product in product_blocks:
