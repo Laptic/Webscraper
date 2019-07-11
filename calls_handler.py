@@ -21,6 +21,7 @@ class ProcessObject(object):
         if not self.subprocess:
             return None
         else:
+            self.out = self.out + self.subprocess.stdout.read()
             return self.subprocess.poll()
 
     def get_out(self):
