@@ -76,10 +76,4 @@ class SubprocessPool(object):
                     else:
                         time.sleep(.1)
         # when all queued processes are complete, process results
-        self.process_results()
-
-    def process_results(self):
-        while self.result_list:
-            # do something with results
-            result = self.result_list.pop(0)
-            print(str(result))
+        return  self.result_list
