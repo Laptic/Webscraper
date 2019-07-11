@@ -84,72 +84,72 @@ def amazonInput(db,website,insertQuery,idNum):
     cursor.executemany(insertQuery,amazonTuples)
     db.commit()
 
-if __name__ == "__main__":
-    print("hello")
-
-    db = connect()
-
-    idNum = 25
-    query = "INSERT INTO ram_parts (name,price,website,id) VALUES (%s,%s,%s,%s)"
-    ramNewEggWebsite = "https://www.newegg.com/Desktop-Memory/SubCategory/ID-147/Page-1?Tid=7611"
-    ramMicrocenterWebsite = "https://www.microcenter.com/search/search_results.aspx?Ntk=all&sortby=match&N=4294966965&myStore=true"
-    ramAmazonWebsite = "https://www.amazon.com/s?k=ram&i=electronics&qid=1559337571&ref=sr_pg_1"
-    #newEggInput(db,ramNewEggWebsite,query,idNum)
-    amazonInput(db,ramAmazonWebsite,query,idNum)
-
-
-
-
-    pizza = '''
-    cursor = db.cursor()
-
-    NUM_PAGES = 1
-
-    newEggRamUrl = f"https://www.newegg.com/p/pl?Submit=StoreIM&Depa={NUM_PAGES}&Category=34"
-    print(newEggRamUrl)
-
-    newEggItems = page_parser.newEggScraper_scraper_url(newEggRamUrl)
-
-
-    num = 1;
-    newEggTuples = []
-    for item in newEggItems:
-
-        itemPrice = item['price'][1:]
-        itemPrice = float(itemPrice)
-
-        newEggValue = (str(item['name']),itemPrice,'newEgg',num)
-        newEggTuples.append(newEggValue)
-        num = num + 1
-
-    query = "INSERT INTO all_parts (name,price,website,id) VALUES (%s,%s,%s,%s)"
-
-    print(newEggTuples)
-    cursor.executemany(query,newEggTuples)
-    db.commit()
-
-
-
-    num = "$10.99"
-    num = num[1:]
-    num = float(num)
-
-
-    query = "INSERT INTO all_parts (name,price,website,id) values (%s,%s,%s,%s)"
-
-    values = ('gtx 270',num,'microcenter',2)
-
-    cursor.execute(query,values)
-    db.commit()
-
-
-    query = "select * from pet"
-    query2 = "insert into pet (name,owner,age,id) values (%s,%s,%s,%s)"
-    values = ('moe','mami',2,8)
-    cursor.execute(query2,values)
-    db.commit()
-
-    cursor.execute(query)
-    print(cursor.fetchall())
-    print(cursor.rowcount,"record inserted")
-    '''
+# if __name__ == "__main__":
+#     print("hello")
+#
+#     db = connect()
+#
+#     idNum = 25
+#     query = "INSERT INTO ram_parts (name,price,website,id) VALUES (%s,%s,%s,%s)"
+#     ramNewEggWebsite = "https://www.newegg.com/Desktop-Memory/SubCategory/ID-147/Page-1?Tid=7611"
+#     ramMicrocenterWebsite = "https://www.microcenter.com/search/search_results.aspx?Ntk=all&sortby=match&N=4294966965&myStore=true"
+#     ramAmazonWebsite = "https://www.amazon.com/s?k=ram&i=electronics&qid=1559337571&ref=sr_pg_1"
+#     #newEggInput(db,ramNewEggWebsite,query,idNum)
+#     amazonInput(db,ramAmazonWebsite,query,idNum)
+#
+#
+#
+#
+#     pizza = '''
+#     cursor = db.cursor()
+#
+#     NUM_PAGES = 1
+#
+#     newEggRamUrl = f"https://www.newegg.com/p/pl?Submit=StoreIM&Depa={NUM_PAGES}&Category=34"
+#     print(newEggRamUrl)
+#
+#     newEggItems = page_parser.newEggScraper_scraper_url(newEggRamUrl)
+#
+#
+#     num = 1;
+#     newEggTuples = []
+#     for item in newEggItems:
+#
+#         itemPrice = item['price'][1:]
+#         itemPrice = float(itemPrice)
+#
+#         newEggValue = (str(item['name']),itemPrice,'newEgg',num)
+#         newEggTuples.append(newEggValue)
+#         num = num + 1
+#
+#     query = "INSERT INTO all_parts (name,price,website,id) VALUES (%s,%s,%s,%s)"
+#
+#     print(newEggTuples)
+#     cursor.executemany(query,newEggTuples)
+#     db.commit()
+#
+#
+#
+#     num = "$10.99"
+#     num = num[1:]
+#     num = float(num)
+#
+#
+#     query = "INSERT INTO all_parts (name,price,website,id) values (%s,%s,%s,%s)"
+#
+#     values = ('gtx 270',num,'microcenter',2)
+#
+#     cursor.execute(query,values)
+#     db.commit()
+#
+#
+#     query = "select * from pet"
+#     query2 = "insert into pet (name,owner,age,id) values (%s,%s,%s,%s)"
+#     values = ('moe','mami',2,8)
+#     cursor.execute(query2,values)
+#     db.commit()
+#
+#     cursor.execute(query)
+#     print(cursor.fetchall())
+#     print(cursor.rowcount,"record inserted")
+#     '''
