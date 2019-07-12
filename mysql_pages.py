@@ -9,6 +9,7 @@ config.read(config_file)
 
 PASSWORD = config.get('passwords', 'mysqlPassword')
 
+
 def connect():
     db = mysql.connect(
     host = "localhost",
@@ -20,15 +21,14 @@ def connect():
     return db
 
 
-def newEggInput(db,website,insertQuery,idNum):
+def newEggInput(egg_items, db, insertQuery, idNum):
     #make ram_parts
     #query = "INSERT INTO ram_parts (name,price,website,id) VALUES (%s,%s,%s,%s)"
     cursor = db.cursor()
-    newEggItems = page_parser.newEggScraper_scraper_url(website)
 
     newEggTuples = []
 
-    for item in newEggItems:
+    for item in egg_items:
 
         itemPrice = item['price'][1:]
         itemPrice = float(itemPrice)
@@ -40,14 +40,14 @@ def newEggInput(db,website,insertQuery,idNum):
     cursor.executemany(insertQuery,newEggTuples)
     db.commit()
 
-def microcenterInput(db,website,insertQuery,idNum):
+
+def microcenterInput(micro_items, db, insertQuery, idNum):
 
     cursor = db.cursor()
-    microcenterItems = page_parser.microCenter_scraper_url(website)
 
     microcenterTuples = []
 
-    for item in microcenterItems:
+    for item in micro_items:
 
         itemPrice = item['price'][1:]
         itemPrice = float(itemPrice)
@@ -60,14 +60,13 @@ def microcenterInput(db,website,insertQuery,idNum):
     db.commit()
 
 
-def amazonInput(db,website,insertQuery,idNum):
+def amazonInput(amazon_items, db, insertQuery, idNum):
 
     cursor = db.cursor()
-    amazonItems = page_parser.amazon_scraper_url(website)
 
     amazonTuples = []
 
-    for item in amazonItems:
+    for item in amazon_items:
 
         #syntax error for some reason
         if item['price'] == 'null':

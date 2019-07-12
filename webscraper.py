@@ -3,19 +3,23 @@
 import requests
 import multiprocessing
 import page_parser
+import mysql_pages
 # import mysql.connector as mysql
 import time
 import lxml.html
 
-HEADER = {"User-agent":"Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36"}
-
+HEADER = {"User-agent":"Mozilla/5.0 (Windows NT 10.0; WOW64) \
+AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36"}
+AMAZON_KEY = "amazon"
+EGG_KEY = "newegg"
+MICRO_KEY = "micro"
 t1 = time.time()
 
 
 WEBSITE_TYPE_DICT = {
-    "newegg": page_parser.new_egg_scraper,
-    "amazon": page_parser.amazon_scraper,
-    "micro": page_parser.micro_center_scraper
+    EGG_KEY: page_parser.new_egg_scraper,
+    AMAZON_KEY: page_parser.amazon_scraper,
+    MICRO_KEY: page_parser.micro_center_scraper
 }
 
 
@@ -61,13 +65,24 @@ if __name__ == '__main__':
     multiprocessing.set_start_method('spawn')
     call_objects = []
     for item in lists:
-        if 'newegg' in item:
-            call_objects.append(CallObject("newegg", item))
-        elif 'amazon' in item:
-            call_objects.append(CallObject("amazon", item))
-        elif 'microcenter' in item:
-            call_objects.append(CallObject("micro", item))
+        if EGG_KEY in item:
+            call_objects.append(CallObject(EGG_KEY, item))
+        elif AMAZON_KEY in item:
+            call_objects.append(CallObject(AMAZON_KEY, item))
+        elif MICRO_KEY in item:
+            call_objects.append(CallObject(MICRO_KEY, item))
     with multiprocessing.Pool(5) as p:
         result_objects = p.map(web_call, call_objects)
     t2 = time.time()
     print(t2 - t1)
+    db = mysql_pages.connect()
+    idNum = 25
+    query = "INSERT INTO ram_parts (name,price,website,id) VALUES (%s,%s,%s,%s)"
+    for item in result_objects:
+        if item.website_type is EGG_KEY:
+            mysql_pages.newEggInput(item.product_list, db, query, idNum)
+        if item.website_type is AMAZON_KEY:
+            mysql_pages.amazonInput(item.product_list, db, query, idNum)
+        elif item.website_type is MICRO_KEY:
+            mysql_pages.microcenterInput(item.product_list, db, query, idNum)
+
