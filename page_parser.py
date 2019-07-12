@@ -52,10 +52,7 @@ def amazonScraper(url,filename,writeMode):
 
     file.close()
 
-def amazon_scraper_url(url):
-
-    html = session.get(url,timeout=5)
-    doc = lxml.html.fromstring(html.content)
+def amazon_scraper(doc):
 
     products = doc.xpath('//div[contains(@class,"sg-row") and contains(@class,"s-result-list")]/div[@data-asin!=""]/div/..')
 
@@ -69,6 +66,7 @@ def amazon_scraper_url(url):
 
     return product_list
 
+
 def amazon_scraper_item(lxml):
 
     name_xpath = './/span[contains(@class,"a-size-medium") and contains(@class,"a-color-base") and contains(@class, "a-text-normal")]'
@@ -77,46 +75,43 @@ def amazon_scraper_item(lxml):
     name = lxml.xpath(name_xpath)[0].text_content()
     price = lxml.xpath(price_xpath)
 
-
     if len(price) < 1:
         price = "null"
     else:
         price = price[0].text_content()
 
-    item = {}
-
-    item['name'] = name
-
-    item['price'] = price
-
+    item = {
+        'name': name,
+        'price': price
+    }
     return item
 
 
 
-#scapper for newEgg using https://www.newegg.com/p/pl?d=ram&N=-1&isNodeId=1&Submit=ENE&DEPA=0&Order=BESTMATCH
-#doesnt get the first three items from the first page and does not scraper the first item from every page after
-#every scrape includes the first item of the next page as the last item of the current page
-#fix above later
-#takes a url and a filename (both strings)
-#some names may have commas, so we have to replace them
+# scapper for newEgg using https://www.newegg.com/p/pl?d=ram&N=-1&isNodeId=1&Submit=ENE&DEPA=0&Order=BESTMATCH
+# doesnt get the first three items from the first page and does not scraper the first item from every page after
+# every scrape includes the first item of the next page as the last item of the current page
+# fix above later
+# takes a url and a filename (both strings)
+# some names may have commas, so we have to replace them
 
 def newEggScaper_file(url,filename,writeMode):
 
     html = requests.get(url,timeout = 5)
     doc = lxml.html.fromstring(html.content)
 
-    #holds an array of html elements that contains a product
+    # holds an array of html elements that contains a product
     item_blocks = doc.xpath('.//div[@class="item-container   "]')
 
-    #writes all ram values to a text file
+    # writes all ram values to a text file
     file = open(filename,writeMode)
 
-    #number the individual products
+    # number the individual products
     position = 1
     for item in item_blocks:
-        #add an if statement for missing prices
-        #for example https://www.newegg.com/p/pl?Submit=ENE&N=100007709&IsNodeId=1&bop=And&ActiveSearchResult=True&SrchInDesc=ASUS&Page=1&PageSize=36&order=BESTMATCH
-        #has a missing price
+        # add an if statement for missing prices
+        # for example https://www.newegg.com/p/pl?Submit=ENE&N=100007709&IsNodeId=1&bop=And&ActiveSearchResult=True&SrchInDesc=ASUS&Page=1&PageSize=36&order=BESTMATCH
+        # has a missing price
         file.write(str(position)+". ")
         file.write(item.xpath('.//a[@class="item-title"]')[0].text_content() + ",")
         file.write(item.xpath('.//li[@class="price-current"]')[0].text_content().replace('\r\n',' ').replace('\t', ' ').replace('|', ' ').split()[0] +"\r\n")
@@ -124,45 +119,40 @@ def newEggScaper_file(url,filename,writeMode):
 
     file.close()
 
-def newEggScraper_scraper_url(url):
 
-    html = session.get(url,timeout=5)
-    doc = lxml.html.fromstring(html.content)
+def new_egg_scraper(doc):
 
-    #holds an array of html elements that contains a product
+    # holds an array of html elements that contains a product
     product_blocks = doc.xpath('.//div[@class="item-container   "]')
 #
     product_list = []
 
     for product in product_blocks:
-
-
-        temp = newEgg_scraper_item(product)
-
+        temp = new_egg_item(product)
         product_list.append(temp)
 
     return product_list
 
-def newEgg_scraper_item(lxml):
+
+def new_egg_item(lxml_in):
 
     name_xpath = './/a[@class="item-title"]'
     price_xpath = './/li[@class="price-current"]'
 
-    name = lxml.xpath(name_xpath)[0].text_content()
-    price = lxml.xpath(price_xpath)[0].text_content().replace('\r\n',' ').replace('\t', ' ').replace('|', ' ').split()[0]
+    name = lxml_in.xpath(name_xpath)[0].text_content()
+    price = lxml_in.xpath(price_xpath)[0].text_content().replace('\r\n',' ').replace('\t', ' ').replace('|', ' ').split()[0]
 
-    item = {}
-
-    item['name'] = name
-
-    item['price'] = price
-
+    item = {
+        'name': name,
+        'price': price
+    }
     return item
 
-#scrapes for product information from microcenter
-#takes a url(from microcenter), a filename to write to and a writemode for the file
-#some names may have commas, so we gotta take that into account
-#some names (ram for example) have extra words attached to the name, we we gotta take those out
+
+# scrapes for product information from microcenter
+# takes a url(from microcenter), a filename to write to and a writemode for the file
+# some names may have commas, so we gotta take that into account
+# some names (ram for example) have extra words attached to the name, we we gotta take those out
 def microCenterScaper_file(url,filename,writeMode):
 
 
@@ -187,16 +177,13 @@ def microCenterScaper_file(url,filename,writeMode):
 
 #scrapes a whole page off of microcenter and returns a dictionary
 #containing the products and prices(possibly more)
-def microCenter_scraper_url(url):
-
-    html = session.get(url,timeout=5)
-    doc = lxml.html.fromstring(html.content)
+def micro_center_scraper(doc):
 
     #holds a list of html objects
     product_blocks = doc.xpath('.//li[@class="product_wrapper"]')
 
-    with open("microCenter_contents.xml", mode='wb') as localfile:
-         localfile.write(html.content)
+    # with open("microCenter_contents.xml", mode='wb') as localfile:
+    #      localfile.write(html.content)
 
     list_of_products = []
 
@@ -204,13 +191,14 @@ def microCenter_scraper_url(url):
     #and creates a dictionary and adds it to list_of_products
     for product in product_blocks:
 
-        temp = microCenter_scraper_item(product)
+        temp = micro_center_scraper_item(product)
         list_of_products.append(temp)
 
     return list_of_products
 
-#lxml must already be a product container
-def microCenter_scraper_item(lxml):
+
+# lxml must already be a product container
+def micro_center_scraper_item(lxml):
 
     xpath_exp = './/a[@data-name]'
 
@@ -224,26 +212,27 @@ def microCenter_scraper_item(lxml):
 
     return item
 
-if __name__ == "__main__":
-    print("hello")
 
-    newEggRamUrl = "https://www.newegg.com/Desktop-Memory/SubCategory/ID-147/Page-1?Tid=7611"
-    newEggGraphicsUrl = "https://www.newegg.com/Desktop-Graphics-Cards/SubCategory/ID-48/Page-1?Tid=7709"
-    url = "https://www.newegg.com/p/pl?Submit=ENE&N=100007709&IsNodeId=1&bop=And&ActiveSearchResult=True&SrchInDesc=ASUS&Page=1&PageSize=36&order=BESTMATCH"
-    #newEggScaper(newEggGraphicsUrl,"graphicsCards.txt","w")
-    microCenterRamUrl = "https://www.microcenter.com/search/search_results.aspx?Ntk=all&sortby=match&N=4294966965&myStore=true"
-    microCenterGraphicsUrl = "https://www.microcenter.com/search/search_results.aspx?Ntk=all&sortby=match&N=4294966937&myStore=false"
-    #microCenterScaper_file(microCenterRamUrl,"microRam.txt","w+")
-    url = "https://www.microcenter.com/search/search_results.aspx?Ntk=all&sortby=match&N=4294966965&myStore=true"
-    #stuff = microCenter_scraper_url(url)
-    #stuff = newEggScraper_scraper_url(newEggRamUrl)
-    amazonRamUrl= "https://www.amazon.com/s?k=ram&i=electronics&qid=1559337571&ref=sr_pg_1"
-    stuff = amazon_scraper_url(amazonRamUrl)
-    for item in stuff:
-        print(item)
-        print()
-
-
-    #amazonScraper(amazonRamUrl,"amazonRam.txt","w")
-    #a = newEggPageScraper("zam.txt",2)
-    #price.text_content().replace('\r\n',' ').replace('\t', ' ').replace('|', ' ').split()[0]
+# if __name__ == "__main__":
+#     print("hello")
+#
+#     newEggRamUrl = "https://www.newegg.com/Desktop-Memory/SubCategory/ID-147/Page-1?Tid=7611"
+#     newEggGraphicsUrl = "https://www.newegg.com/Desktop-Graphics-Cards/SubCategory/ID-48/Page-1?Tid=7709"
+#     url = "https://www.newegg.com/p/pl?Submit=ENE&N=100007709&IsNodeId=1&bop=And&ActiveSearchResult=True&SrchInDesc=ASUS&Page=1&PageSize=36&order=BESTMATCH"
+#     #newEggScaper(newEggGraphicsUrl,"graphicsCards.txt","w")
+#     microCenterRamUrl = "https://www.microcenter.com/search/search_results.aspx?Ntk=all&sortby=match&N=4294966965&myStore=true"
+#     microCenterGraphicsUrl = "https://www.microcenter.com/search/search_results.aspx?Ntk=all&sortby=match&N=4294966937&myStore=false"
+#     #microCenterScaper_file(microCenterRamUrl,"microRam.txt","w+")
+#     url = "https://www.microcenter.com/search/search_results.aspx?Ntk=all&sortby=match&N=4294966965&myStore=true"
+#     #stuff = microCenter_scraper_url(url)
+#     #stuff = newEggScraper_scraper_url(newEggRamUrl)
+#     amazonRamUrl= "https://www.amazon.com/s?k=ram&i=electronics&qid=1559337571&ref=sr_pg_1"
+#     stuff = amazon_scraper_url(amazonRamUrl)
+#     for item in stuff:
+#         print(item)
+#         print()
+#
+#
+#     #amazonScraper(amazonRamUrl,"amazonRam.txt","w")
+#     #a = newEggPageScraper("zam.txt",2)
+#     #price.text_content().replace('\r\n',' ').replace('\t', ' ').replace('|', ' ').split()[0]
