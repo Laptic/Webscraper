@@ -39,6 +39,8 @@ def newEggInput(egg_items, db, insertQuery, idNum):
 
     cursor.executemany(insertQuery,newEggTuples)
     db.commit()
+    print("reached here")
+    return idNum
 
 
 def microcenterInput(micro_items, db, insertQuery, idNum):
@@ -58,7 +60,7 @@ def microcenterInput(micro_items, db, insertQuery, idNum):
 
     cursor.executemany(insertQuery,microcenterTuples)
     db.commit()
-
+    return idNum
 
 def amazonInput(amazon_items, db, insertQuery, idNum):
 
@@ -68,7 +70,6 @@ def amazonInput(amazon_items, db, insertQuery, idNum):
 
     for item in amazon_items:
 
-        #syntax error for some reason
         if item['price'] == 'null':
             itemPrice = 0.00
         else:
@@ -82,7 +83,7 @@ def amazonInput(amazon_items, db, insertQuery, idNum):
 
     cursor.executemany(insertQuery,amazonTuples)
     db.commit()
-
+    return idNum
 # if __name__ == "__main__":
 #     print("hello")
 #
