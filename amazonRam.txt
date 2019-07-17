@@ -1,0 +1,60 @@
+Kingston Technology HyperX Fury 2400MHz DDR4 Non-ECC CL15 DIMM 4 DDR4 2400 MT/s (PC4-19200) HX424C15FB/4, $27.99
+
+HyperX Predator DDR4 RGB 16GB kit 3200MHz CL16 DIMM XMP RAM Memory/Infrared Sync Technology Black (HX432C16PB3AK2/16), $123.99
+
+Corsair Vengeance LPX 16GB (2x8GB) DDR4 DRAM 3000MHz C15 Desktop Memory Kit - Black (CMK16GX4M2B3000C15), $79.99
+
+Corsair LPX 32GB DRAM 3000MHz C15 Memory Kit for DDR4 Systems, $179.99
+
+G.SKILL TridentZ RGB Series 16GB (2 x 8GB) 288-Pin DDR4 3000MHz (PC4 24000) Desktop Memory Model F4-3000C16D-16GTZR, $104.99
+
+CORSAIR Vengeance RGB 16GB (2x8GB) DDR4 3600MHz C18 Desktop Memory - White, $194.19
+
+Corsair CMZ16GX3M2A1600C10 Vengeance 16GB (2x8GB) DDR3 1600 MHz (PC3 12800) Desktop Memory 1.5V, $75.01
+
+Kingston Technology HyperX Fury Black 16GB 3466MHz DDR4 CL19 DIMM Memory HX434C19FB/16, $111.99
+
+Corsair Dominator Platinum RGB 32GB (2x16GB) DDR4 3200 (PC4-25600) C16 1.35V Desktop Memory, $249.99
+
+G.Skill 16GB (2 x 8GB) Ripjaws V Series DDR4 PC4-25600 3200MHz Intel Z170 Platform Desktop Memory F4-3200C16D-16GVRB, $96.83
+
+CORSAIR VENGEANCE LED 16GB (2x8GB) DDR4 3000MHz C15 Desktop Memory  - Blue LED, $159.06
+
+Corsair CMW32GX4M2C3200C16 Vengeance RGB PRO 32GB (2x16GB) DDR4 3200 (PC4-25600) C16 Desktop Memory Black, $199.99
+
+Crucial Technology RAM Memory - 32GB - DDR4 SDRAM (CT32G4RFD4266), $195.00
+
+G.SKILL Ripjaws V Series 16GB (2 x 8GB) 288-Pin DDR4 SDRAM DDR4 3000 (PC4 24000) Intel Z170 Platform / Intel X99 Platform Desktop Memory Model (F4-3000C15D-16GVRB), $94.99
+
+Timetec Hynix IC 16GB DDR4 2400MHz PC4-19200 Non-ECC Unbuffered 1.2V CL16 2Rx8 Dual Rank 288 Pin UDIMM Desktop PC Computer Memory Ram Module Upgrade (16GB), $69.99
+
+Timetec Hynix IC 4GB DDR4 2666MHz PC4-21300 Unbuffered Non-ECC 1.2V CL19 1Rx8 Single Rank 288 Pin UDIMM Desktop Memory RAM Module Upgrade (4GB), $21.99
+
+Ballistix Sport LT 32GB Kit (16GBx2) DDR4 3000 MT/s (PC4-24000) CL15 DR x8 DIMM 288-Pin Memory - BLS2K16G4D30AESC (White), $193.96
+
+ADATA Premier, 8GB, DDR4, 2666MHz (PC4-21300), CL19, DIMM Memory, $78.05
+
+XPG Spectrix D41 DDR4 RGB 3000MHz 16GB (2x8GB) 288-Pin PC4-24000 Desktop U-DIMM Memory Retail Kit Red (AX4U300038G16-DR41), $89.99
+
+Corsair CMW32GX4M2A2666C16 Vengeance RGB PRO 32GB (2x16GB) DDR4 2666 (PC4-21300) C16 Desktop Memory Black, $169.99
+
+Corsair CMW64GX4M4C3200C16W Vengeance RGB PRO 64GB (4x16GB) DDR4 3200 (PC4-25600) C16 Desktop Memory White, $419.99
+
+Crucial 8GB Single DDR4 2666 MT/s (PC4-21300) SR x8 SODIMM 260-Pin Memory - CT8G4SFS8266, $46.90
+
+HyperX Predator DDR4 RGB 32GB kit 3200MHz CL16 DIMM XMP RAM Memory/Infrared Sync Technology Black (HX432C16PB3AK4/32), $248.99
+
+Timetec Hynix IC 32GB Kit (2x16GB) DDR4 2666MHz PC4-21300 Unbuffered Non-ECC 1.2V CL19 2Rx8 Dual Rank 288 Pin UDIMM Desktop Memory RAM Module Upgrade (32GB Kit (2x16GB)), $139.99
+
+Corsair Vengeance LPX 64GB (4x16GB) DDR4 3000 (PC4-24000) C16 1.35V Desktop Memory - Black PC Memory CMK64GX4M4D3000C16, $299.99
+
+CORSAIR Vengeance RGB 16GB (2x8GB) DDR4 3000MHz C16 Desktop Memory - Black, null
+
+Timetec Hynix IC 32GB KIT(2x16GB) DDR4 2400MHz PC4-19200 Non-ECC Unbuffered 1.2V CL17 2Rx8 Dual Rank 288 Pin UDIMM Desktop PC Computer Memory Ram Module Upgrade S Series (32GB KIT(2x16GB)), $133.99
+
+Timetec Hynix IC 32GB Kit (2x16GB) DDR4 2400 MHz PC4-19200 Non-ECC Unbuffered 1.2V CL16 2Rx8 Dual Rank 288 Pin UDIMM Desktop PC Computer Memory Ram Module Upgrade (32GB Kit (2x16GB)), $133.99
+
+Timetec Hynix IC 16GB DDR4 2400MHz PC4-19200 Non-ECC Unbuffered 1.2V CL17 2Rx8 Dual Rank 288 Pin UDIMM Desktop PC Computer Memory Ram Module Upgrade S Series (16GB), $69.99
+
+Timetec Hynix IC 16GB Kit (2x8GB) DDR4 2133MHz PC4-17000 Unbuffered Non-ECC 1.2V CL15 1Rx8 Single Rank 260 Pin SODIMM Laptop Notebook Computer Memory RAM Module Upgrade (16GB Kit (2x8GB)), $72.99
+

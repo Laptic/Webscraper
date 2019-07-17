@@ -1,2 +1,4 @@
 [urls]
 new-egg=https://www.newegg.com/p/pl?d=ram&N=-1&isNodeId=1&Submit=ENE&DEPA=0&Order=BESTMATCH
+[passwords]
+mysqlPassword= ***REMOVED***
