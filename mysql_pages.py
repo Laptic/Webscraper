@@ -30,8 +30,20 @@ def newEggInput(egg_items, db, insertQuery, idNum):
 
     for item in egg_items:
 
-        itemPrice = item['price'][1:]
-        itemPrice = float(itemPrice)
+        #print(item['price'])
+        itemPrice = 0.00
+
+        if item['price'] == 'null':
+            itemPrice = 0.00
+
+        elif ',' in item['price']:
+            itemPrice = item['price'].replace(',','')
+            itemPrice = itemPrice[1:]
+            itemPrice = float(itemPrice)
+
+        else:
+            itemPrice = item['price'][1:]
+            itemPrice = float(itemPrice)
 
         newEggValue = (str(item['name']),itemPrice,'newEgg',idNum)
         newEggTuples.append(newEggValue)
@@ -72,6 +84,11 @@ def amazonInput(amazon_items, db, insertQuery, idNum):
 
         if item['price'] == 'null':
             itemPrice = 0.00
+
+        elif ',' in item['price']:
+            itemPrice = item['price'].replace(',','')
+            itemPrice = itemPrice[1:]
+            itemPrice = float(itemPrice)
         else:
             itemPrice = item['price'][1:]
             itemPrice = float(itemPrice)

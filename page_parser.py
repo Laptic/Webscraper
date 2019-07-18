@@ -139,8 +139,19 @@ def new_egg_item(lxml_in):
     name_xpath = './/a[@class="item-title"]'
     price_xpath = './/li[@class="price-current"]'
 
+
+
     name = lxml_in.xpath(name_xpath)[0].text_content()
-    price = lxml_in.xpath(price_xpath)[0].text_content().replace('\r\n',' ').replace('\t', ' ').replace('|', ' ').split()[0]
+
+    #if the number of characters is 16, this means that the
+    #text_content for the price is empty
+    if len(lxml_in.xpath(price_xpath)[0].text_content()) == 16:
+
+        price = 'null'
+
+    else:
+
+        price = lxml_in.xpath(price_xpath)[0].text_content().replace('\r\n',' ').replace('\t', ' ').replace('|', ' ').split()[0]
 
     item = {
         'name': name,
@@ -177,6 +188,7 @@ def microCenterScaper_file(url,filename,writeMode):
 
 #scrapes a whole page off of microcenter and returns a dictionary
 #containing the products and prices(possibly more)
+#does not work yet for products with no prices (when it is set to items found in microcenter website)
 def micro_center_scraper(doc):
 
     #holds a list of html objects
